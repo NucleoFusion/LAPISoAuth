@@ -1,20 +1,31 @@
 import React from "react";
 import axios from "axios";
 import $ from "jquery";
+import { useLocation } from "react-router-dom";
 
 export default function Login() {
-  function handleLogin(e) {
+  const queryString = useLocation().search;
+  const queryParams = new URLSearchParams(queryString);
+  // console.log(queryPara.get("page"));
+
+  async function handleLogin(e) {
     e.preventDefault();
 
     const email = $("input[name='logEmail']").val();
     const password = $("input[name='logPassword']").val();
 
-    console.log(email, password);
+    const result = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}api/login?email=${email}&password=${password}`
+    );
+
+    if ((await result.data.Message) === "Authenticated") {
+      window.location.href = queryParams.get("successRedirect");
+    } else {
+      window.location.href = queryParams.get("failureRedirect");
+    }
   }
 
   function showRegister() {
-    console.log("HEllo");
-
     $(".loginDiv").hide();
     $(".regDiv").show();
   }

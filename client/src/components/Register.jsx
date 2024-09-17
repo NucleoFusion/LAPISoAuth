@@ -1,14 +1,33 @@
 import React from "react";
 import axios from "axios";
 import $ from "jquery";
+import { useLocation } from "react-router-dom";
 
 export default function Register() {
-  function handleRegister(e) {
+  const queryString = useLocation().search;
+  const queryParams = new URLSearchParams(queryString);
+  // console.log(query.get("page"));
+
+  async function handleRegister(e) {
     e.preventDefault();
 
     const name = $("input[name='regName']").val();
     const email = $("input[name='regEmail']").val();
     const password = $("input[name='regPassword']").val();
+
+    console.log(
+      `${process.env.REACT_APP_BASE_URL}api/register?email=${email}&password=${password}&name=${name}`
+    );
+
+    const result = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}api/register?email=${email}&password=${password}&name=${name}`
+    );
+
+    if ((await result.data.Message) === "Authenticated") {
+      window.location.href = queryParams.get("successRedirect");
+    } else {
+      window.location.href = queryParams.get("failureRedirect");
+    }
   }
 
   function showLogin() {
@@ -25,7 +44,7 @@ export default function Register() {
             Name
           </span>
           <input
-            type="email"
+            type="text"
             className="form-control"
             aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-default"
@@ -53,7 +72,7 @@ export default function Register() {
             className="form-control"
             aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-default"
-            name="rogPassword"
+            name="regPassword"
           />
         </div>
         <button type="submit" className="logRegButton bebas-neue">
