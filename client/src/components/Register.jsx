@@ -11,7 +11,7 @@ export default function Register() {
   async function handleRegister(e) {
     e.preventDefault();
 
-    if ($(".regDiv:hidden")) {
+    if ($(".regDiv:hidden").length !== 0) {
       return;
     }
 

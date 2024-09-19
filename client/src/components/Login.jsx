@@ -10,7 +10,7 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault();
-    if ($(".loginDiv:hidden")) {
+    if ($(".loginDiv:hidden").length !== 0) {
       return;
     }
 
