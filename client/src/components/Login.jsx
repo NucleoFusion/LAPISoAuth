@@ -19,9 +19,21 @@ export default function Login() {
     );
 
     if ((await result.data.Message) === "Authenticated") {
-      window.location.href = queryParams.get("successRedirect");
+      if (!queryParams.get("successRedirect")) {
+        alert("Invalid Redriection Link Provided");
+        return;
+      } else {
+        window.location.href =
+          queryParams.get("successRedirect") + `?id=${result.data.Id}`;
+      }
     } else {
-      window.location.href = queryParams.get("failureRedirect");
+      if (!queryParams.get("failureRedirect")) {
+        alert("Invalid Redriection Link Provided");
+        return;
+      } else {
+        window.location.href =
+          queryParams.get("failureRedirect") + `?id=${result.data.Id}`;
+      }
     }
   }
 
