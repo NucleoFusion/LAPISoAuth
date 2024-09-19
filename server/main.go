@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"lapisoAuth.com/auth"
 	"lapisoAuth.com/db"
@@ -22,5 +23,5 @@ func main() {
 	http.HandleFunc("/api/register", connection.Register)
 
 	fmt.Println("Listening on 6766...")
-	http.ListenAndServe(":6766", nil)
+	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
