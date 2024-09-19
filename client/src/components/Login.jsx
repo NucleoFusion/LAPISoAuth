@@ -10,6 +10,9 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault();
+    if ($(".loginDiv:hidden")) {
+      return;
+    }
 
     const email = $("input[name='logEmail']").val();
     const password = $("input[name='logPassword']").val();

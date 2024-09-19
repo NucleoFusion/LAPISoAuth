@@ -11,6 +11,10 @@ export default function Register() {
   async function handleRegister(e) {
     e.preventDefault();
 
+    if ($(".regDiv:hidden")) {
+      return;
+    }
+
     const name = $("input[name='regName']").val();
     const email = $("input[name='regEmail']").val();
     const password = $("input[name='regPassword']").val();
